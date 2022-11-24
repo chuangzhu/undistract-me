@@ -91,19 +91,7 @@ function notify_when_long_running_commands_finish_install() {
                         icon=dialog-error
                         urgency=normal
                     fi
-                    notify=$(command -v notify-send)
-                    if [ -x "$notify" ]; then
-                        $notify \
-                        -i $icon \
-                        -u $urgency \
-                        "Command completed in $time_taken_human" \
-                        "$__udm_last_command"
-                        if [[ "$UDM_PLAY_SOUND" != 0 ]]; then
-                            paplay /usr/share/sounds/freedesktop/stereo/complete.oga
-                        fi
-                    else
-                        echo -ne "\a"
-                    fi
+                    echo -e '\e]9;'"Command completed in $time_taken_human;$__udm_last_command"'\e\\'
                 fi
                 if [[ -n $LONG_RUNNING_COMMAND_CUSTOM_TIMEOUT ]] &&
                     [[ -n $LONG_RUNNING_COMMAND_CUSTOM ]] &&
